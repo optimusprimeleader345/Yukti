@@ -1,0 +1,106 @@
+.workspace-layout {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: #fbfbfa; /* Clean, calm background a la Linear/Notion */
+  color: #1a1a2e;
+  z-index: 100; /* Overrides landing page global background */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the layout covers the entire screen, hiding the global body background */
+.workspace-layout::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: #fbfbfa;
+  z-index: -1;
+}
+
+.ws-topbar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.ws-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ws-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.ws-brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1e1040, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ws-brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.01em;
+}
+
+.ws-topbar-divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.ws-breadcrumbs {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+}
+
+.ws-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ws-icon-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #555;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ws-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.ws-user-btn {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fafafa;
+}
+
+.ws-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}

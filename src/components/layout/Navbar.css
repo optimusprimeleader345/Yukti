@@ -1,0 +1,110 @@
+.navbar {
+  position: absolute; /* Not fixed, just like screenshot */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  z-index: 100;
+  background: transparent;
+}
+
+.navbar-container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* ── Logo ── */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 120px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.03em;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.logo-tagline {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #6a577c;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Links ── */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+  margin-right: 24px;
+}
+
+.navbar-links button {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.navbar-links button:hover {
+  color: #000;
+}
+
+/* ── Actions ── */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-login-btn {
+  display: none; /* Hide login text link */
+}
+
+.nav-cta-btn {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 6px;
+  background: #000;
+  transition: opacity 0.15s;
+}
+.nav-cta-btn:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .navbar-links { display: none; }
+}

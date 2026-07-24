@@ -1,0 +1,135 @@
+.gh-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: gh-fade-in 0.2s ease-out;
+}
+
+@keyframes gh-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.gh-modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  transform: scale(1);
+  animation: gh-scale-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes gh-scale-up {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.gh-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  color: #888;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.gh-modal-close:hover:not(:disabled) {
+  background: #f5f5f5;
+  color: #111;
+}
+.gh-modal-close:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.gh-modal-header {
+  padding: 32px 32px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gh-modal-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f0f4f8;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.gh-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.gh-modal-header p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.gh-modal-body {
+  padding: 16px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80px;
+}
+
+.gh-connect-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.gh-connect-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26,26,46,0.15);
+}
+
+.gh-status-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.gh-status-container.success {
+  color: #10b981;
+}
+
+.gh-spinner {
+  animation: gh-spin 1s linear infinite;
+  color: #4f46e5;
+}
+
+@keyframes gh-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

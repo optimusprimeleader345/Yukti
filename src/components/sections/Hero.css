@@ -1,0 +1,117 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 120px; /* Offset for navbar */
+}
+
+.hero-container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 800px;
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+.hero-visual-col {
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  animation: fade-in-up 1s ease-out 0.2s forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #6a577c;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.hero-badge-icon {
+  color: #a855f7;
+  display: flex;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: #000;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 32px;
+  max-width: 600px;
+  font-weight: 400;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.hero-btn-primary {
+  padding: 14px 28px;
+  background: #000;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+.hero-btn-primary:hover { opacity: 0.8; }
+
+.hero-btn-secondary {
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: #000;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.hero-btn-secondary:hover { background: rgba(255, 255, 255, 0.9); }
+
+@media (max-width: 1024px) {
+  .hero-container { padding-top: 40px; }
+  .hero-title { font-size: 3.5rem; }
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.5rem; }
+}
