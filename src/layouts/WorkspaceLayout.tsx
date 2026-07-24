@@ -11,7 +11,7 @@ export const WorkspaceLayout: React.FC = () => {
         <div className="ws-topbar-left">
           <Link to="/workspace" className="ws-brand">
             <div className="ws-brand-icon" style={{ background: 'transparent', width: '100px', height: '32px' }}>
-              <img src="/Logo2.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <img src="/Logo3.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span className="ws-brand-name">Yukti</span>
           </Link>

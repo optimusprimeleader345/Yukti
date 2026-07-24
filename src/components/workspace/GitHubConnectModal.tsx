@@ -13,6 +13,13 @@ type ConnectState = 'idle' | 'connecting' | 'success';
 export const GitHubConnectModal: React.FC<GitHubConnectModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const [connectState, setConnectState] = useState<ConnectState>('idle');
+  const [token, setToken] = useState('');
+
+  const handleConnect = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!token.trim()) return;
+    setConnectState('connecting');
+  };
 
   useEffect(() => {
     if (connectState === 'connecting') {
@@ -50,12 +57,25 @@ export const GitHubConnectModal: React.FC<GitHubConnectModalProps> = ({ isOpen, 
 
         <div className="gh-modal-body">
           {connectState === 'idle' && (
-            <button 
-              className="gh-connect-btn"
-              onClick={() => setConnectState('connecting')}
-            >
-              Sign in with GitHub
-            </button>
+            <form className="gh-token-form" onSubmit={handleConnect}>
+              <div className="gh-input-group">
+                <label>Personal Access Token</label>
+                <input 
+                  type="password" 
+                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" 
+                  value={token}
+                  onChange={(e) => setToken(e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <button 
+                type="submit"
+                className="gh-connect-btn"
+                disabled={!token.trim()}
+              >
+                Connect to GitHub
+              </button>
+            </form>
           )}
 
           {connectState === 'connecting' && (

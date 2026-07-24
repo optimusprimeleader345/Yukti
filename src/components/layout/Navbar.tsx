@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
         {/* Logo */}
         <Link to="/" className="navbar-logo">
           <div className="logo-icon">
-            <img src="/Logo2.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            <img src="/Logo3.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div className="logo-text-group">
             <span className="logo-text">Yukti</span>

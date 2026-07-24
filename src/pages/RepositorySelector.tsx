@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, GitBranch, Clock, ChevronRight, Lock, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './RepositorySelector.css';
 
 const mockRepos = [
@@ -11,14 +12,13 @@ const mockRepos = [
 ];
 
 export const RepositorySelector: React.FC = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
   const filteredRepos = mockRepos.filter(r => r.name.toLowerCase().includes(search.toLowerCase()));
 
-  const handleSelectRepo = (repoId: number) => {
-    // Phase 3 transition
-    console.log("Selected repo:", repoId);
-    // navigate('/workspace/importing'); // Will be implemented in Phase 3
+  const handleSelectRepo = (_repoId: number) => {
+    navigate('/workspace/processing');
   };
 
   return (

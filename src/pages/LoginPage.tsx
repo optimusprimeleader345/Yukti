@@ -22,7 +22,7 @@ export const LoginPage: React.FC = () => {
         <div className="login-brand-center">
           <Link to="/" className="login-brand">
             <div className="login-brand-icon" style={{ background: 'transparent', border: 'none', boxShadow: 'none', width: '160px', height: '56px' }}>
-              <img src="/Logo2.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <img src="/Logo3.png" alt="Yukti" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
           </Link>
         </div>

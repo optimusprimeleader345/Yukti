@@ -1,204 +1,260 @@
 .ws-entry-root {
   flex: 1;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80px 24px;
-  overflow-y: auto;
+  justify-content: center;
+  padding: 64px 24px;
+  background: var(--bg-secondary);
+  overflow: hidden;
+  color: var(--text-primary);
+}
+
+/* We don't need the mesh background if we rely on index.css, but we can add some subtle bright blobs */
+.ws-mesh-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.ws-mesh-blob {
+  position: absolute;
+  filter: blur(100px);
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: pulse-blob 10s infinite alternate ease-in-out;
+}
+.ws-mesh-blob.purple {
+  top: -10%; right: -10%;
+  width: 600px; height: 600px;
+  background: var(--brand-purple);
+}
+.ws-mesh-blob.blue {
+  bottom: -20%; left: -10%;
+  width: 800px; height: 800px;
+  background: var(--brand-indigo);
+  animation-delay: -5s;
+}
+
+@keyframes pulse-blob {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-20px, 20px); }
 }
 
 .ws-entry-container {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 680px;
-  animation: ws-fade-in 0.4s ease-out forwards;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  animation: ws-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes ws-fade-in {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes ws-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .ws-entry-header {
-  margin-bottom: 32px;
+  text-align: center;
 }
 .ws-entry-header h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1a1a2e;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .ws-entry-header p {
-  font-size: 1rem;
-  color: #666;
+  font-size: 1.15rem;
+  color: var(--text-muted);
 }
 
-/* Search Bar */
-.ws-search-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-  margin-bottom: 48px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.ws-search-bar:focus-within {
-  border-color: #4f46e5;
-  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.08);
-}
-.ws-search-bar svg { color: #888; }
-.ws-search-bar input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 15px;
-  color: #1a1a2e;
-  background: transparent;
-}
-.ws-search-bar input::placeholder { color: #999; }
-.ws-search-shortcut {
-  font-size: 12px;
-  font-weight: 500;
-  color: #888;
-  background: #f5f5f5;
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.05);
-}
-
-/* Actions Grid */
-.ws-actions-grid {
+/* Premium Action Cards */
+.ws-action-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 48px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
 
-.ws-action-card {
+.ws-premium-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 16px 40px rgba(124, 58, 237, 0.04);
+}
+
+.ws-card-glow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.ws-premium-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(124, 58, 237, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 60px rgba(124, 58, 237, 0.12);
+}
+.ws-premium-card:hover .ws-card-glow {
+  opacity: 1;
+}
+
+.ws-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: left;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-}
-.ws-action-card:hover {
-  border-color: rgba(0,0,0,0.15);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transform: translateY(-1px);
-}
-
-.ws-action-icon {
-  width: 40px; height: 40px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
+  justify-content: center;
   flex-shrink: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-light);
+  color: var(--brand-purple);
+  transition: all 0.3s;
 }
-.ws-action-icon.github { background: #f0f4f8; color: #1a1a2e; }
-.ws-action-icon.local { background: #fdf2f8; color: #db2777; }
-
-.ws-action-text { flex: 1; }
-.ws-action-text h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 2px;
+.github-card:hover .ws-card-icon {
+  background: #181717;
+  color: #fff;
+  border-color: #181717;
+  box-shadow: 0 8px 24px rgba(24,23,23,0.3);
 }
-.ws-action-text p {
-  font-size: 12px;
-  color: #666;
-}
-
-.ws-action-chevron {
-  color: #ccc;
-  transition: transform 0.2s, color 0.2s;
-}
-.ws-action-card:hover .ws-action-chevron {
-  color: #1a1a2e;
-  transform: translateX(2px);
+.local-card:hover .ws-card-icon {
+  background: var(--brand-purple);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.3);
 }
 
-/* Recent Projects */
+.ws-card-content {
+  flex: 1;
+}
+.ws-card-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.ws-card-content p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ws-card-arrow {
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+.ws-premium-card:hover .ws-card-arrow {
+  color: var(--brand-purple);
+  transform: translateX(4px);
+}
+
+/* Recent Activity Feed */
+.ws-recent-section {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 16px 40px rgba(124, 58, 237, 0.04);
+}
+
 .ws-recent-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 0 4px;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--brand-purple);
 }
-.ws-recent-header h3 {
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
-  text-transform: uppercase;
+.ws-recent-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
-.ws-recent-new {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #4f46e5;
-  background: transparent;
-}
-.ws-recent-new:hover { color: #3730a3; }
 
 .ws-recent-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .ws-recent-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 8px;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
   background: transparent;
-  transition: background 0.15s;
+  transition: all 0.2s;
   cursor: pointer;
-  border: 1px solid transparent;
 }
 .ws-recent-item:hover {
   background: #ffffff;
-  border-color: rgba(0,0,0,0.05);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  transform: translateX(4px);
 }
 
-.ws-recent-item-icon {
-  color: #aaa;
-}
-
-.ws-recent-item-info {
-  flex: 1;
+.ws-recent-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.ws-proj-name {
+.ws-recent-icon.github { background: #f3f4f6; color: #111; }
+.ws-recent-icon.document { background: #eff6ff; color: #3b82f6; }
+.ws-recent-icon.zip { background: #f5f3ff; color: #8b5cf6; }
+
+.ws-recent-details {
+  flex: 1;
+}
+.ws-recent-details h4 {
   font-size: 14px;
-  font-weight: 500;
-  color: #1a1a2e;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
 }
-.ws-proj-desc {
+.ws-recent-details span {
   font-size: 12px;
-  color: #777;
+  color: var(--text-muted);
 }
 
-.ws-recent-item-time {
+.ws-recent-open {
+  padding: 8px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--brand-purple);
   font-size: 12px;
-  color: #aaa;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.2s;
 }
-
-@media (max-width: 600px) {
-  .ws-actions-grid { grid-template-columns: 1fr; }
+.ws-recent-item:hover .ws-recent-open {
+  opacity: 1;
+  transform: translateX(0);
+}
+.ws-recent-open:hover {
+  background: var(--brand-purple);
+  color: #fff;
 }

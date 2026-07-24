@@ -1,85 +1,100 @@
 import React, { useState } from 'react';
 import './WorkspaceEntry.css';
-import { Folder, ChevronRight, Clock, Plus } from 'lucide-react';
+import { ChevronRight, UploadCloud, GitBranch, Clock, FileCode, FileText } from 'lucide-react';
 import { GitHubConnectModal } from '../components/workspace/GitHubConnectModal';
+import { ZipUploadModal } from '../components/workspace/ZipUploadModal';
+
+const recentProjects = [
+  { id: 1, name: 'acme-corp/frontend-core', type: 'github', time: '2 hours ago', icon: <GitBranch size={16} /> },
+  { id: 2, name: 'SystemDesign_V2.pdf', type: 'document', time: 'Yesterday', icon: <FileText size={16} /> },
+  { id: 3, name: 'legacy-api-service.zip', type: 'zip', time: '3 days ago', icon: <FileCode size={16} /> },
+];
 
 export const WorkspaceEntry: React.FC = () => {
   const [isGitHubModalOpen, setIsGitHubModalOpen] = useState(false);
+  const [isZipModalOpen, setIsZipModalOpen] = useState(false);
 
   return (
     <div className="ws-entry-root">
+      
+      {/* Decorative Background Elements */}
+      <div className="ws-mesh-bg">
+        <div className="ws-mesh-blob purple"></div>
+        <div className="ws-mesh-blob blue"></div>
+      </div>
+
       <div className="ws-entry-container">
         
         <div className="ws-entry-header">
-          <h1>Good morning.</h1>
-          <p>What are we building today?</p>
+          <h1>Welcome back, Engineer.</h1>
+          <p>What are we analyzing today?</p>
         </div>
 
-        {/* Global Command/Search Placeholder */}
-        <div className="ws-search-bar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" placeholder="Search repositories, open projects, or ask AI..." />
-          <div className="ws-search-shortcut">⌘K</div>
+        <div className="ws-action-grid">
+          {/* GitHub Connect Card */}
+          <button className="ws-premium-card github-card" onClick={() => setIsGitHubModalOpen(true)}>
+            <div className="ws-card-glow"></div>
+            <div className="ws-card-icon">
+              <GitBranch size={28} />
+            </div>
+            <div className="ws-card-content">
+              <h3>Connect Repository</h3>
+              <p>Import directly from GitHub via OAuth or Personal Access Token</p>
+            </div>
+            <div className="ws-card-arrow">
+              <ChevronRight size={20} />
+            </div>
+          </button>
+
+          {/* Local Upload Card */}
+          <button className="ws-premium-card local-card" onClick={() => setIsZipModalOpen(true)}>
+            <div className="ws-card-glow"></div>
+            <div className="ws-card-icon">
+              <UploadCloud size={28} />
+            </div>
+            <div className="ws-card-content">
+              <h3>Upload Local Data</h3>
+              <p>Extract intelligence from .zip, .md, or .pdf files instantly</p>
+            </div>
+            <div className="ws-card-arrow">
+              <ChevronRight size={20} />
+            </div>
+          </button>
         </div>
 
-        <div className="ws-entry-content">
+        <div className="ws-recent-section">
+          <div className="ws-recent-header">
+            <Clock size={16} />
+            <h2>Recent Activity</h2>
+          </div>
           
-          {/* Main Actions */}
-          <div className="ws-actions-grid">
-            <button className="ws-action-card" onClick={() => setIsGitHubModalOpen(true)}>
-              <div className="ws-action-icon github">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.2 5.2 0 0 0-1.4-3.6 5.3 5.3 0 0 0-.1-3.5s-1.2-.38-3.9 1.4a13.38 13.38 0 0 0-7 0C4.3 2.5 3 2.9 3 2.9a5.3 5.3 0 0 0-.1 3.5A5.2 5.2 0 0 0 1.5 10c0 5.23 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4"/><path d="M9 20a1 1 0 0 1-1 1H7a3 3 0 0 1-3-3 2 2 0 0 0-2-2"/></svg>
-              </div>
-              <div className="ws-action-text">
-                <h3>Connect GitHub</h3>
-                <p>Import and analyze repositories</p>
-              </div>
-              <ChevronRight size={16} className="ws-action-chevron" />
-            </button>
-
-            <button className="ws-action-card">
-              <div className="ws-action-icon local"><Folder size={20} /></div>
-              <div className="ws-action-text">
-                <h3>Local Project</h3>
-                <p>Open a folder from your machine</p>
-              </div>
-              <ChevronRight size={16} className="ws-action-chevron" />
-            </button>
-          </div>
-
-          {/* Recent Projects */}
-          <div className="ws-recent-section">
-            <div className="ws-recent-header">
-              <h3>Recent Projects</h3>
-              <button className="ws-recent-new"><Plus size={14}/> New</button>
-            </div>
-
-            <div className="ws-recent-list">
-              {[
-                { name: 'frontend-core', desc: 'React, Vite, Tailwind', time: '2 hours ago' },
-                { name: 'auth-service', desc: 'Node.js, Express, Redis', time: 'Yesterday' },
-                { name: 'infrastructure-aws', desc: 'Terraform, Python', time: '3 days ago' },
-              ].map((proj) => (
-                <div className="ws-recent-item" key={proj.name}>
-                  <div className="ws-recent-item-icon">
-                    <Clock size={14} />
-                  </div>
-                  <div className="ws-recent-item-info">
-                    <span className="ws-proj-name">{proj.name}</span>
-                    <span className="ws-proj-desc">{proj.desc}</span>
-                  </div>
-                  <div className="ws-recent-item-time">{proj.time}</div>
+          <div className="ws-recent-list">
+            {recentProjects.map((proj) => (
+              <div key={proj.id} className="ws-recent-item">
+                <div className={`ws-recent-icon ${proj.type}`}>
+                  {proj.icon}
                 </div>
-              ))}
-            </div>
+                <div className="ws-recent-details">
+                  <h4>{proj.name}</h4>
+                  <span>Analyzed {proj.time}</span>
+                </div>
+                <button className="ws-recent-open">
+                  Open Workspace
+                </button>
+              </div>
+            ))}
           </div>
-
         </div>
+
       </div>
 
       <GitHubConnectModal 
         isOpen={isGitHubModalOpen} 
         onClose={() => setIsGitHubModalOpen(false)} 
+      />
+      <ZipUploadModal 
+        isOpen={isZipModalOpen} 
+        onClose={() => setIsZipModalOpen(false)} 
       />
     </div>
   );

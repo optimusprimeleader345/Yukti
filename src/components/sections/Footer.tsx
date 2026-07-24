@@ -8,7 +8,7 @@ export const Footer: React.FC = () => (
       <div className="footer-top">
         <div className="footer-brand">
           <Link to="/" className="footer-logo">
-            <img src="/Logo2.png" alt="Yukti" style={{ width: 120, height: 40, objectFit: 'contain' }} />
+            <img src="/Logo3.png" alt="Yukti" style={{ width: 120, height: 40, objectFit: 'contain' }} />
           </Link>
           <p className="footer-tagline">Understand your code. Discover what matters.</p>
         </div>
