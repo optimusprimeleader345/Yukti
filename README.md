@@ -235,14 +235,6 @@ This project is licensed under the MIT License.
 
 ---
 
-# 👨‍💻 Author
-
-**Rohit Jadhav**
-
-- GitHub: https://github.com/optimusprimeleader345
-- LinkedIn: https://www.linkedin.com/in/rohit-jadhav-45282331a
-
----
 
 <div align="center">
 
