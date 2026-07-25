@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './WorkspaceEntry.css';
-import { ChevronRight, UploadCloud, GitBranch, Clock, FileCode, FileText } from 'lucide-react';
+import { ChevronRight, UploadCloud, GitBranch, Clock, FileCode, FileText, ShieldAlert } from 'lucide-react';
 import { GitHubConnectModal } from '../components/workspace/GitHubConnectModal';
 import { ZipUploadModal } from '../components/workspace/ZipUploadModal';
+import { RedTeamModal } from '../components/workspace/RedTeamModal';
 
 const recentProjects = [
   { id: 1, name: 'acme-corp/frontend-core', type: 'github', time: '2 hours ago', icon: <GitBranch size={16} /> },
@@ -13,6 +14,7 @@ const recentProjects = [
 export const WorkspaceEntry: React.FC = () => {
   const [isGitHubModalOpen, setIsGitHubModalOpen] = useState(false);
   const [isZipModalOpen, setIsZipModalOpen] = useState(false);
+  const [isRedTeamModalOpen, setIsRedTeamModalOpen] = useState(false);
 
   return (
     <div className="ws-entry-root">
@@ -27,7 +29,7 @@ export const WorkspaceEntry: React.FC = () => {
         
         <div className="ws-entry-header">
           <h1>Welcome back, Engineer.</h1>
-          <p>What are we analyzing today?</p>
+          <p>What are we analyzing or stress-testing today?</p>
         </div>
 
         <div className="ws-action-grid">
@@ -41,7 +43,7 @@ export const WorkspaceEntry: React.FC = () => {
               <h3>Connect Repository</h3>
               <p>Import directly from GitHub via OAuth or Personal Access Token</p>
             </div>
-            <div className="ws-card-arrow">
+            <div className="ws-card-arrow" style={{ alignSelf: 'flex-end', marginTop: 'auto' }}>
               <ChevronRight size={20} />
             </div>
           </button>
@@ -56,7 +58,22 @@ export const WorkspaceEntry: React.FC = () => {
               <h3>Upload Local Data</h3>
               <p>Extract intelligence from .zip, .md, or .pdf files instantly</p>
             </div>
-            <div className="ws-card-arrow">
+            <div className="ws-card-arrow" style={{ alignSelf: 'flex-end', marginTop: 'auto' }}>
+              <ChevronRight size={20} />
+            </div>
+          </button>
+
+          {/* AI Red-Team Simulator Card */}
+          <button className="ws-premium-card redteam-card" onClick={() => setIsRedTeamModalOpen(true)}>
+            <div className="ws-card-glow" style={{ background: 'radial-gradient(circle at center, rgba(239, 68, 68, 0.08) 0%, transparent 70%)' }}></div>
+            <div className="ws-card-icon" style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+              <ShieldAlert size={28} />
+            </div>
+            <div className="ws-card-content">
+              <h3>AI Red-Team Simulator</h3>
+              <p>Autonomous cyber attack stress testing & zero-trust defensive shield generator</p>
+            </div>
+            <div className="ws-card-arrow" style={{ alignSelf: 'flex-end', marginTop: 'auto', color: '#ef4444' }}>
               <ChevronRight size={20} />
             </div>
           </button>
@@ -96,6 +113,11 @@ export const WorkspaceEntry: React.FC = () => {
         isOpen={isZipModalOpen} 
         onClose={() => setIsZipModalOpen(false)} 
       />
+      <RedTeamModal 
+        isOpen={isRedTeamModalOpen} 
+        onClose={() => setIsRedTeamModalOpen(false)} 
+      />
     </div>
   );
 };
+

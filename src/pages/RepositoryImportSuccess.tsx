@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CheckCircle2, FileCode, FolderTree, HardDrive, ArrowRight, ShieldCheck, Zap, Activity } from 'lucide-react';
+import { CheckCircle2, FileCode, FolderTree, HardDrive, ArrowRight, ShieldCheck, Zap, Activity, Globe } from 'lucide-react';
 import './RepositoryImportSuccess.css';
 
 export const RepositoryImportSuccess: React.FC = () => {
@@ -106,9 +106,16 @@ export const RepositoryImportSuccess: React.FC = () => {
           </div>
         </div>
 
-        <div className="import-success-actions">
-          <button className="import-btn-primary" onClick={() => navigate('/workspace/processing')}>
+        <div className="import-success-actions" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          <button className="import-btn-primary" onClick={() => navigate('/workspace/processing', { state: { fileData } })}>
             Initialize AI Workspace <ArrowRight size={18} />
+          </button>
+          <button 
+            className="import-btn-primary" 
+            style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)', border: 'none' }}
+            onClick={() => navigate('/workspace/chat', { state: { initialTab: 'market', topic: fileData.name } })}
+          >
+            <Globe size={18} style={{ marginRight: '8px' }} /> Run Reddit & Social Validation
           </button>
           <button className="import-btn-secondary" onClick={() => navigate('/workspace')}>
             Cancel

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './WorkspaceChat.css';
-import { MessageSquare, FileText, Settings, PanelRightClose, PanelRightOpen, Paperclip, ArrowUp, Zap, Shield, GitBranch, ChevronRight, ChevronDown, FileCode, Folder } from 'lucide-react';
+import { MessageSquare, FileText, Settings, PanelRightClose, PanelRightOpen, Paperclip, ArrowUp, Zap, Shield, GitBranch, ChevronRight, ChevronDown, FileCode, Folder, Globe } from 'lucide-react';
+import { SocialValidationView } from '../components/workspace/SocialValidationView';
 
 // Custom hook for typing effect
 const useTypingEffect = (text: string, speed: number = 20) => {
@@ -40,7 +42,11 @@ const FileTreeNode: React.FC<{ name: string; isFolder?: boolean; children?: Reac
 };
 
 export const WorkspaceChat: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'chat' | 'files'>('chat');
+  const location = useLocation();
+  const initialTab = location.state?.initialTab || 'chat';
+  const projectTopic = location.state?.topic || 'acme-corp/frontend-core';
+
+  const [activeTab, setActiveTab] = useState<'chat' | 'files' | 'market'>(initialTab);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -81,6 +87,7 @@ export const WorkspaceChat: React.FC = () => {
         <div className="ws-sidebar-nav">
           <button className={`ws-nav-btn ${activeTab === 'chat' ? 'active' : ''}`} onClick={() => setActiveTab('chat')} title="Chat"><MessageSquare size={18} /></button>
           <button className={`ws-nav-btn ${activeTab === 'files' ? 'active' : ''}`} onClick={() => setActiveTab('files')} title="Files"><FileText size={18} /></button>
+          <button className={`ws-nav-btn ${activeTab === 'market' ? 'active' : ''}`} style={activeTab === 'market' ? { color: '#8b5cf6', background: 'rgba(139, 92, 246, 0.15)' } : {}} onClick={() => setActiveTab('market')} title="Market & Social Validation"><Globe size={18} /></button>
         </div>
         <div className="ws-sidebar-bottom">
           <button className="ws-nav-btn" title="Settings"><Settings size={18} /></button>
@@ -116,66 +123,72 @@ export const WorkspaceChat: React.FC = () => {
         </aside>
       )}
 
-      {/* CENTER - Chat Canvas */}
-      <main className="ws-chat-canvas">
-        <div className="ws-chat-header">
-          <div className="ws-chat-repo-badge">
-            <GitBranch size={14} /> acme-corp/frontend-core
-          </div>
-          <button 
-            className="ws-panel-toggle" 
-            onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
-            title="Toggle Context Panel"
-          >
-            {isRightPanelOpen ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
-          </button>
-        </div>
+      {/* CENTER - Canvas */}
+      <main className="ws-chat-canvas" style={{ padding: activeTab === 'market' ? 0 : undefined, overflow: activeTab === 'market' ? 'hidden' : undefined }}>
+        {activeTab === 'market' ? (
+          <SocialValidationView initialTopic={projectTopic} />
+        ) : (
+          <>
+            <div className="ws-chat-header">
+              <div className="ws-chat-repo-badge">
+                <GitBranch size={14} /> acme-corp/frontend-core
+              </div>
+              <button 
+                className="ws-panel-toggle" 
+                onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
+                title="Toggle Context Panel"
+              >
+                {isRightPanelOpen ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
+              </button>
+            </div>
 
-        <div className="ws-messages-container">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`ws-message-row ${msg.role}`}>
-              {msg.role === 'assistant' && (
-                <div className="ws-msg-avatar ai">✦</div>
+            <div className="ws-messages-container">
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`ws-message-row ${msg.role}`}>
+                  {msg.role === 'assistant' && (
+                    <div className="ws-msg-avatar ai">✦</div>
+                  )}
+                  <div className="ws-msg-bubble">
+                    {msg.role === 'assistant' && idx === messages.length - 1 && !msg.isCode ? (
+                      <StreamingText text={msg.content} />
+                    ) : msg.isCode ? (
+                      <CodeBlock content={msg.content} />
+                    ) : (
+                      msg.content
+                    )}
+                  </div>
+                </div>
+              ))}
+              {isTyping && (
+                <div className="ws-message-row assistant">
+                  <div className="ws-msg-avatar ai">✦</div>
+                  <div className="ws-msg-bubble typing-indicator">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
               )}
-              <div className="ws-msg-bubble">
-                {msg.role === 'assistant' && idx === messages.length - 1 && !msg.isCode ? (
-                  <StreamingText text={msg.content} />
-                ) : msg.isCode ? (
-                  <CodeBlock content={msg.content} />
-                ) : (
-                  msg.content
-                )}
-              </div>
             </div>
-          ))}
-          {isTyping && (
-            <div className="ws-message-row assistant">
-              <div className="ws-msg-avatar ai">✦</div>
-              <div className="ws-msg-bubble typing-indicator">
-                <span></span><span></span><span></span>
-              </div>
-            </div>
-          )}
-        </div>
 
-        <div className="ws-prompt-container">
-          <form className="ws-prompt-box" onSubmit={handleSubmit}>
-            <button type="button" className="ws-prompt-attach"><Paperclip size={18} /></button>
-            <input 
-              type="text" 
-              placeholder="Ask anything about your codebase..." 
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              disabled={isTyping}
-            />
-            <button type="submit" className="ws-prompt-submit" disabled={!prompt.trim() || isTyping}>
-              <ArrowUp size={18} />
-            </button>
-          </form>
-          <div className="ws-prompt-footer">
-            Yukti AI can make mistakes. Consider verifying critical architectural changes.
-          </div>
-        </div>
+            <div className="ws-prompt-container">
+              <form className="ws-prompt-box" onSubmit={handleSubmit}>
+                <button type="button" className="ws-prompt-attach"><Paperclip size={18} /></button>
+                <input 
+                  type="text" 
+                  placeholder="Ask anything about your codebase..." 
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  disabled={isTyping}
+                />
+                <button type="submit" className="ws-prompt-submit" disabled={!prompt.trim() || isTyping}>
+                  <ArrowUp size={18} />
+                </button>
+              </form>
+              <div className="ws-prompt-footer">
+                Yukti AI can make mistakes. Consider verifying critical architectural changes.
+              </div>
+            </div>
+          </>
+        )}
       </main>
 
       {/* RIGHT SIDEBAR - Context Panel */}

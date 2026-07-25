@@ -45,7 +45,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 1140px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -77,8 +77,14 @@
 /* Premium Action Cards */
 .ws-action-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .ws-action-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ws-premium-card {
@@ -89,6 +95,7 @@
   border-radius: var(--radius-xl);
   padding: 32px;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 20px;
   text-align: left;
@@ -139,6 +146,16 @@
   background: var(--brand-purple);
   color: #fff;
   box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+}
+.redteam-card:hover .ws-card-icon {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  box-shadow: 0 8px 24px rgba(239,68,68,0.4);
+}
+.redteam-card:hover {
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 24px 60px rgba(239, 68, 68, 0.12);
 }
 
 .ws-card-content {
